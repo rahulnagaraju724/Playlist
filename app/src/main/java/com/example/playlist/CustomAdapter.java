@@ -10,15 +10,13 @@ import android.widget.TextView;
 
 import java.util.List;
 
-public class CustomAdapter extends BaseAdapter  {
+public class CustomAdapter extends BaseAdapter {
 
-    private LayoutInflater lInflater;
+    private LayoutInflater inflater;
     private List<ItemObject> listStorage;
 
-    public CustomAdapter(Context context,
-                         List<ItemObject> customizedListView) {
-        lInflater = (LayoutInflater)context.getSystemService
-                (Context.LAYOUT_INFLATER_SERVICE);
+    public CustomAdapter(Context context, List<ItemObject> customizedListView) {
+        inflater = LayoutInflater.from(context);
         listStorage = customizedListView;
     }
 
@@ -29,7 +27,7 @@ public class CustomAdapter extends BaseAdapter  {
 
     @Override
     public Object getItem(int position) {
-        return position;
+        return listStorage.get(position);
     }
 
     @Override
@@ -37,35 +35,42 @@ public class CustomAdapter extends BaseAdapter  {
         return position;
     }
 
+    static class ViewHolder {
+        TextView songTitle;
+        TextView songYear;
+        TextView songArtist;
+    }
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        TextView songTitle = null;
-        TextView songYear = null;
-        TextView songArtist = null;
+        ViewHolder holder;
 
         if (convertView == null) {
-            convertView = lInflater.inflate(R.layout.list, parent,
-                    false);
-        }
-        songTitle = convertView.findViewById(R.id.textView);
-        songYear = convertView.findViewById(R.id.textView2);
-        songArtist = convertView.findViewById(R.id.textView3);
-        songTitle.setText("Song Title: " +
-                listStorage.get(position).getTitle());
-        songYear.setText("Song Year: " +
-                listStorage.get(position).getYear());
-        songArtist.setText("Song Artist: " +
-                listStorage.get(position).getArtist());
+            convertView = inflater.inflate(R.layout.list, parent, false);
 
+            holder = new ViewHolder();
+            holder.songTitle = convertView.findViewById(R.id.textView);
+            holder.songYear = convertView.findViewById(R.id.textView2);
+            holder.songArtist = convertView.findViewById(R.id.textView3);
+
+            convertView.setTag(holder);
+        } else {
+            holder = (ViewHolder) convertView.getTag();
+        }
+
+        ItemObject currentItem = listStorage.get(position);
+
+        holder.songTitle.setText("Song Title: " + currentItem.getTitle());
+        holder.songYear.setText("Song Year: " + currentItem.getYear());
+        holder.songArtist.setText("Song Artist: " + currentItem.getArtist());
+
+        // Alternate row background color
         if (position % 2 == 1) {
             convertView.setBackgroundColor(Color.GRAY);
         } else {
             convertView.setBackgroundColor(Color.LTGRAY);
         }
 
-
         return convertView;
     }
-
-
 }
