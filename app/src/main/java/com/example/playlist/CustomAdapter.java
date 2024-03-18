@@ -57,11 +57,11 @@ public class CustomAdapter extends BaseAdapter  {
         songArtist.setText("Song Artist: " +
                 listStorage.get(position).getArtist());
 
-//        if (position % 2 == 1) {
-//            convertView.setBackgroundColor(Color.GRAY);
-//        } else {
-//            convertView.setBackgroundColor(Color.LTGRAY);
-//        }
+        if (position % 2 == 1) {
+            convertView.setBackgroundColor(Color.GRAY);
+        } else {
+            convertView.setBackgroundColor(Color.LTGRAY);
+        }
 
 
         return convertView;
