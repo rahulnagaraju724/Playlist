@@ -24,6 +24,16 @@ public class ItemObject {
         return title;
     }
 
+    public ItemObject(String title, String artist, String year, String sold, String country, String company, String price) {
+        this.title = title;
+        this.artist = artist;
+        this.year = year;
+        this.sold = sold;
+        this.country = country;
+        this.company = company;
+        this.price = price;
+    }
+
     public void setTitle(String title) {
         this.title = title;
     }
